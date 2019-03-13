@@ -89,8 +89,8 @@ class TwitterClient:
         :return: Bearer token
         """
 
-        consumer_key = quote_plus(current_app.config['TWITTER_CONSUMER_KEY'])
-        consumer_secret = quote_plus(current_app.config['TWITTER_CONSUMER_SECRET'])
+        consumer_key = quote_plus(current_app.config['TWITTER_CONSUMER_K'])
+        consumer_secret = quote_plus(current_app.config['TWITTER_CONSUMER_S'])
         bearer_token = base64.b64encode('{}:{}'.format(consumer_key, consumer_secret).encode('utf8'))
 
         headers = {

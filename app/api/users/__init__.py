@@ -10,8 +10,6 @@ class UserSearch(Resource):
         args = parser.parse_args()
 
         try:
-            result = get_tweets_by_user(user, args['limit'])
+            return get_tweets_by_user(user, args['limit']), 200
         except TwitterAPIException as ex:
-            result = {'error': ex.errors}, ex.status_code
-
-        return result, 200
+            return {'error': ex.errors[0]}, ex.status_code
