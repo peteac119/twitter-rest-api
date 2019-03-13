@@ -1,4 +1,5 @@
 import os
+import httpretty
 
 from unittest import TestCase
 from app import create_app
@@ -30,8 +31,12 @@ class BaseTestCase(TestCase):
             ]
         }
 
+        self.mock_token = {
+            "token_type": "test_token_type",
+            "access_token": "test_access_token"
+        }
+
         self.mock_tweet_response = {
-            "created_at": "Wed Mar 13 13:53:53 +0000 2019",
             "id": 1238475588942304,
             "id_str": "1238475588942304",
             "text": "test_text_here",

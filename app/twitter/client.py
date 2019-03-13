@@ -129,7 +129,7 @@ class TwitterClient:
         headers = self._headers()
         url = self.root_url + '/1.1/search/tweets.json'
         params = {
-            'q': "%23" + hash_tag,
+            'q': hash_tag,
             'count': self.limit,
             'include_entities': True
         }

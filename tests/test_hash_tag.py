@@ -9,7 +9,7 @@ class HashTagTestCase(BaseTestCase):
         super(HashTagTestCase, self).setUp()
 
     @httpretty.activate
-    def test_invalid_token_error(self):
+    def test_hashtags_invalid_token_error(self):
         httpretty.register_uri(
             httpretty.POST,
             "http://test.com/oauth2/token",
@@ -35,7 +35,7 @@ class HashTagTestCase(BaseTestCase):
         self.assertDictEqual(actual_json, expected_json)
 
     @httpretty.activate
-    def test_unauthorized_response(self):
+    def test_hashtags_unauthorized_response(self):
         httpretty.register_uri(
             httpretty.POST,
             "http://test.com/oauth2/token",
@@ -58,3 +58,28 @@ class HashTagTestCase(BaseTestCase):
         }
 
         self.assertDictEqual(actual_json, expected_json)
+
+    @httpretty.activate
+    def test_hashtags_with_normal_sweets(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            "http://test.com/oauth2/token",
+            body=json.dumps(self.mock_token),
+            status=200,
+            content_type='application/json'
+        )
+
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://test.com/1.1/search/tweets.json",
+            body=json.dumps(self.mock_tweet_response),
+            status=200,
+            content_type='application/json'
+        )
+
+        response = self.client.get('/hashtags/sample_hashtag')
+
+        self.assertEqual(200, response.status_code)
+
+        actual_result = response.json
+        self.assertDictEqual(self.mock_tweet_response, actual_result)
